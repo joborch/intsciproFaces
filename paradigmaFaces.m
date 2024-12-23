@@ -19,38 +19,17 @@ color = gray; %Definition of Color for myWindow
 ratio = [0 0 width*ratioFactor height*ratioFactor]; %Definition of Ratio for myWindow
 
 %myWindow = Screen('OpenWindow', myScreen, color, ratio);
+
+%% Einlesen der Bilder
 picturePath = ('pictures\'); %define picture Path
 
-pics = dir(picturePath);
+picFolder = dir(picturePath); %Save Picture Folder Contents
 
+%pics = {picFolder(3:end).name};
 
-
-
-
-% %% Einlesen der Bilder
-% path = pictures; %define Path
-
-
-% % Get a list of all image files in the folder
-% imageFiles = dir(fullfile(folderPath, '*.*')); % Match all file types
-% imageExtensions = {'.jpg', '.png', '.jpeg', '.bmp', '.tiff', '.gif'}; % Supported extensions
-
-% % Loop through each file
-% for k = 1:length(imageFiles)
-%     [~, ~, ext] = fileparts(imageFiles(k).name); % Get the file extension
-%     if ismember(lower(ext), imageExtensions) % Check if the file is an image
-%         % Read the image
-%         imagePath = fullfile(folderPath, imageFiles(k).name);
-%         img = imread(imagePath);
-        
-%         % Display the image (optional)
-%         figure, imshow(img), title(['Image: ', imageFiles(k).name]);
-        
-%         % (Optional) Perform operations on the image here
-%         disp(['Processed image: ', imageFiles(k).name]);
-%     end
-% end
-
+for i = 3:length(picFolder)  
+    pics(i-2) = string(picFolder(i).name);  
+end
 
 
 % Experiment Abschluss
