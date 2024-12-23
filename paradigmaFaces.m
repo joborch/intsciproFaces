@@ -11,7 +11,7 @@ myScreen = 0; %Define Screen
     black = BlackIndex(myScreen); %Color Index Black
     gray = (white+black)/2; %Color Index Gray
 
-color = gray; %Definition of Color for myWindow
+color = white; %Definition of Color for myWindow
 
     [width, height]=Screen('WindowSize', 0); %Reads indivdual Screen Size
     ratioFactor = 0.75; %Factor for Screen: 1 is Fullscreen
@@ -46,10 +46,29 @@ for i = 1:sizePicFolder-2
     textures(i) = {Screen('MakeTexture', myWindow, imgdata{i})}; %Save all imgdata as textures
 end
 
+fixCross = ones(50,50)*255;
+fixCross(23:27,:) = 0;
+fixCross(:,23:27) = 0;
+fixcrossTexture = Screen('MakeTexture', myWindow, fixCross);
+
 %% Experiments-Anzeige
 
-Screen('DrawTexture', myWindow, textures{r}); %Draw Texture on Background
+texture = fixcrossTexture; %Defines used Texture
+Screen('DrawTexture', myWindow, texture); %Draw Texture on Background
 Screen('Flip', myWindow); %Show Texture
+WaitSecs(3);
+for i = 1:5
+    Screen('FillRect', myWindow, black, ratio)
+    Screen('Flip', myWindow);
+    WaitSecs(1)
+    Screen('FillRect', myWindow, white, ratio)
+    Screen('Flip', myWindow);
+    WaitSecs(1)
+end
+% showMask(1, 5, myWindow, ratio);
+Screen('DrawTexture', myWindow, texture); %Draw Texture on Background
+Screen('Flip', myWindow); %Show Texture
+
 
 
 % Experiment Abschluss
