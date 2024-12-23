@@ -37,9 +37,6 @@ end
 cd(currentFolderPath);
 
 %% Bilder zur Anzeige vorbereitem
-r = randi([1 sizePicFolder-2]); %generate random number for picture display
-fprintf('Zufallszahl ist %d.', 5); %Debug Message
-
 %Save textures
 textures = cell(1:sizePicFolder-2); %Define textures array
 for i = 1:sizePicFolder-2
@@ -53,22 +50,25 @@ fixcrossTexture = Screen('MakeTexture', myWindow, fixCross);
 
 %% Experiments-Anzeige
 
-texture = fixcrossTexture; %Defines used Texture
-Screen('DrawTexture', myWindow, texture); %Draw Texture on Background
-Screen('Flip', myWindow); %Show Texture
-WaitSecs(3);
-for i = 1:5
-    Screen('FillRect', myWindow, black, ratio)
-    Screen('Flip', myWindow);
-    WaitSecs(1)
-    Screen('FillRect', myWindow, white, ratio)
-    Screen('Flip', myWindow);
-    WaitSecs(1)
-end
-% showMask(1, 5, myWindow, ratio);
-Screen('DrawTexture', myWindow, texture); %Draw Texture on Background
-Screen('Flip', myWindow); %Show Texture
+for i = 1:sizePicFolder-2
+    r = randi([1 sizePicFolder-2]); %generate random number for picture display
+    fprintf('Zufallszahl ist %d.', 5); %Debug Message
 
+    Screen('DrawTexture', myWindow, fixcrossTexture); %Draw Texture on Background
+    Screen('Flip', myWindow); %Show Texture
+    WaitSecs(0.5);
+    for i = 1:10
+        Screen('FillRect', myWindow, black, ratio);
+        Screen('Flip', myWindow);
+        WaitSecs(.01);
+        Screen('FillRect', myWindow, white, ratio);
+        Screen('Flip', myWindow);
+        WaitSecs(.01);
+    end
+    Screen('DrawTexture', myWindow, textures{r}); %Draw Texture on Background
+    Screen('Flip', myWindow); %Show Texture
+    WaitSecs(0.5);
+end
 
 
 % Experiment Abschluss
