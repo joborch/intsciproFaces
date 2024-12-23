@@ -23,13 +23,18 @@ ratio = [0 0 width*ratioFactor height*ratioFactor]; %Definition of Ratio for myW
 %% Einlesen der Bilder
 picturePath = ('pictures\'); %define picture Path
 
-picFolder = dir(picturePath); %Save Picture Folder Contents
+cd(picturePath);
 
-%pics = {picFolder(3:end).name};
+picFolder = dir(); %Save Picture Folder Contents
 
-for i = 3:length(picFolder)  
-    pics(i-2) = string(picFolder(i).name);  
+imgdata = cell(1:length(picFolder)-2);
+
+for i = 3:length(picFolder)
+    imgdata(i-2) = {imread(picFolder(i).name)};
 end
+
+cd(currentFolderPath);
+
 
 
 % Experiment Abschluss
