@@ -26,11 +26,11 @@ picturePath = ('pictures\'); %define picture Path
 cd(picturePath);
 
 picFolder = dir(); %Save Picture Folder Contents
-sizePicFolder = length(picFolder);
 
-imgdata = cell(1:sizePicFolder-2);
-
-for i = 3:sizePicFolder
+imgdata = cell(length(picFolder)-2,1);
+sizeimg = length(imgdata);
+for i = 3:length(picFolder)
+    disp(picFolder(i).name);
     imgdata(i-2) = {imread(picFolder(i).name)};
 end
 
@@ -38,8 +38,8 @@ cd(currentFolderPath);
 
 %% Bilder zur Anzeige vorbereitem
 %Save textures
-textures = cell(1:sizePicFolder-2); %Define textures array
-for i = 1:sizePicFolder-2
+textures = cell(sizeimg,1); %Define textures array
+for i = 1:sizeimg
     textures(i) = {Screen('MakeTexture', myWindow, imgdata{i})}; %Save all imgdata as textures
 end
 
@@ -50,14 +50,16 @@ fixcrossTexture = Screen('MakeTexture', myWindow, fixCross);
 
 %% Experiments-Anzeige
 
-for i = 1:sizePicFolder-2
-    r = randi([1 sizePicFolder-2]); %generate random number for picture display
-    fprintf('Zufallszahl ist %d.', 5); %Debug Message
+rt = zeros(sizeimg, 2);
+KbCheck;
+for i = 1:sizeimg
+    % r = randi([1 sizeimg]); %generate random number for picture display
+    % fprintf('Zufallszahl ist %d.', 5); %Debug Message
 
     Screen('DrawTexture', myWindow, fixcrossTexture); %Draw Texture on Background
     Screen('Flip', myWindow); %Show Texture
     WaitSecs(0.5);
-    for i = 1:10
+    for j = 1:randi([5 15])
         Screen('FillRect', myWindow, black, ratio);
         Screen('Flip', myWindow);
         WaitSecs(.01);
@@ -65,9 +67,21 @@ for i = 1:sizePicFolder-2
         Screen('Flip', myWindow);
         WaitSecs(.01);
     end
-    Screen('DrawTexture', myWindow, textures{r}); %Draw Texture on Background
-    Screen('Flip', myWindow); %Show Texture
-    WaitSecs(0.5);
+    Screen('DrawTexture', myWindow, textures{i}); %Draw Texture on Background
+    [~, onsetTime] = Screen('Flip', myWindow); %Show Texture and save Stimulus onset Time
+      
+    while 1
+        [keyIsDown, secs, keyCode, deltaSecs] = KbCheck();
+        rt(i,1) = secs-onsetTime;
+        rt(i,2) = deltaSecs;
+        if keyIsDown == 1
+            break;
+        elseif rt(i,1)>2
+            rt(i,1) = 0;
+            break;
+        end
+    end
+    disp(rt(i));
 end
 
 
