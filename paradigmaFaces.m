@@ -60,6 +60,7 @@ fprintf('Keycodes initialisiert. ')
 KbCheck; %Referenz KbCheck zur Befehlsini
 fprintf('KbCheck initialisiert. ')
 for i = 1:n
+    Screen('FillRect', myWindow, white, ratio); %Bildschirm weißeln
     Screen('DrawTexture', myWindow, fixcrossTexture); %Fixationskreuz vorbereiten
     fprintf('Fixationskreuz initialisiert. ')
     Screen('Flip', myWindow); %Fixationskreuz zeigen 
@@ -91,7 +92,11 @@ for i = 1:n
     fprintf('! - Reaktionszeit %d.', rt(i));
     fprintf(' - KeyCode %s.', kc(i));
 end
+Screen('Close');
+Screen('FillRect', myWindow, white, ratio); %Bildschirm weißeln
+Screen('DrawText', myWindow, 'Danke für die Teilnahme!', 100, 100);
+Screen('Flip', myWindow);
 
-% Experiment Abschluss
+%% Experiment Abschluss
 KbWait; 
 Screen('CloseAll');
