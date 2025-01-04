@@ -51,7 +51,7 @@ fixcrossTexture = Screen('MakeTexture', myWindow, fixCross); %Textur für Fixati
 
 %% Experiments-Anzeige
 
-n = 2; %Menge an Anzeigen
+n = 50; %Menge an Anzeigen
 fprintf('Experiment mit %d Bildern starten ', n)
 rt = zeros(n, 2);
 fprintf('Reaktionszeiten initialisiert. ')
