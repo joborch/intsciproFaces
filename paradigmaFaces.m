@@ -92,6 +92,10 @@ for i = 1:n
     fprintf('! - Reaktionszeit %d.', rt(i));
     fprintf(' - KeyCode %s.', kc(i));
 end
+
+mittlereReaktion = mean(rt(:,1))
+fprintf('Mittlere Reaktionszeit: %d.', mittlereReaktion);
+
 Screen('Close');
 Screen('FillRect', myWindow, white, ratio); %Bildschirm weißeln
 Screen('DrawText', myWindow, 'Danke für die Teilnahme!', 100, 100);
